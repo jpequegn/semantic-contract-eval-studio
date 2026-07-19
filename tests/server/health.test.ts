@@ -31,6 +31,10 @@ describe("health endpoint", () => {
       method: "GET",
       url: "/api/contracts/finance.active_customer",
     });
+    const changeImpact = await app.inject({
+      method: "GET",
+      url: "/api/change-impact/finance.active_customer",
+    });
 
     expect(overview.json().summary).toMatchObject({
       taskCount: 30,
@@ -53,6 +57,10 @@ describe("health endpoint", () => {
     expect(contractDetail.json()).toMatchObject({
       id: "finance.active_customer",
       owner: "finance-data",
+    });
+    expect(changeImpact.json()).toMatchObject({
+      change: { id: "change.finance_active_customer.v3" },
+      taskCount: 14,
     });
     await app.close();
   });

@@ -1,6 +1,10 @@
 import cors from "@fastify/cors";
 import Fastify from "fastify";
 import { semanticContracts, type Role } from "../domain/contracts";
+import {
+  analyzeDefinitionChange,
+  semanticDefinitionChanges,
+} from "../evaluation/change-impact";
 import type { PersistedTrial } from "../evaluation/ledger";
 import type { Scorecard } from "../evaluation/reports";
 import { runEvaluationSuite } from "../evaluation/runner";
@@ -114,6 +118,19 @@ export async function buildApp(studioData?: StudioData) {
   }));
 
   app.get("/api/contracts", async () => ({ items: semanticContracts }));
+
+  app.get<{ Params: { contractId: string } }>(
+    "/api/change-impact/:contractId",
+    async (request, reply) => {
+      const change = semanticDefinitionChanges.find(
+        (item) => item.contractId === request.params.contractId,
+      );
+      if (!change) {
+        return reply.code(404).send({ error: "Change fixture not found." });
+      }
+      return analyzeDefinitionChange(change);
+    },
+  );
 
   app.get<{ Params: { contractId: string } }>(
     "/api/contracts/:contractId",

@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 
 test("filters task reviews and exposes governed evidence details", async ({
   page,
@@ -11,6 +12,8 @@ test("filters task reviews and exposes governed evidence details", async ({
   await expect(
     page.getByRole("heading", { name: "Task reviews" }),
   ).toBeVisible();
+  const accessibility = await new AxeBuilder({ page }).analyze();
+  expect(accessibility.violations).toEqual([]);
   await page.getByLabel("Role").selectOption("finance");
   await expect(page.getByText("5 task reviews")).toBeVisible();
   await page
