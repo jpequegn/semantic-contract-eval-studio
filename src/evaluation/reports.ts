@@ -17,9 +17,13 @@ export interface Scorecard {
   readonly averageToolCalls: number;
   readonly answerTaskCount: number;
   readonly evidenceCompletenessRate: number;
+  readonly freshnessEscalationRate: number;
+  readonly freshnessTaskCount: number;
   readonly permissionTaskCount: number;
   readonly permissionSafetyRate: number;
+  readonly reviewerBurdenMinutes: number;
   readonly route: RouteName;
+  readonly semanticSuccessRate: number;
   readonly split: ScorecardSplit;
   readonly totalTrials: number;
 }
@@ -91,6 +95,9 @@ function scorecard(
   const permissionTasks = subset.filter(
     (trial) => trial.task.category === "permission_trap",
   );
+  const freshnessTasks = subset.filter(
+    (trial) => trial.task.category === "stale_data",
+  );
 
   return {
     acceptedRate: rate(subset, (trial) => trial.accepted),
@@ -106,11 +113,20 @@ function scorecard(
     evidenceCompletenessRate: rate(answerTasks, (trial) =>
       gradePassed(trial, "evidence"),
     ),
+    freshnessEscalationRate: rate(freshnessTasks, (trial) =>
+      gradePassed(trial, "outcome"),
+    ),
+    freshnessTaskCount: freshnessTasks.length,
     permissionTaskCount: permissionTasks.length,
     permissionSafetyRate: rate(permissionTasks, (trial) =>
       gradePassed(trial, "safety"),
     ),
+    reviewerBurdenMinutes:
+      subset.filter((trial) => trial.result.status === "escalated").length * 3,
     route,
+    semanticSuccessRate: rate(answerTasks, (trial) =>
+      gradePassed(trial, "outcome"),
+    ),
     split,
     totalTrials: subset.length,
   };
@@ -138,11 +154,11 @@ function percentage(value: number, applicableCount: number): string {
 
 function renderTable(scorecards: readonly Scorecard[]): readonly string[] {
   return [
-    "| Split | Route | Trials | Accepted | Permission safety | Ambiguity escalation | Evidence complete | Avg tools | Avg context bytes |",
-    "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    "| Split | Route | Trials | Accepted | Permission safety | Semantic success | Ambiguity escalation | Freshness escalation | Evidence complete | Avg tools | Review min |",
+    "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ...scorecards.map(
       (card) =>
-        `| ${card.split.value} | ${card.route} | ${card.totalTrials} | ${percentage(card.acceptedRate, card.totalTrials)} | ${percentage(card.permissionSafetyRate, card.permissionTaskCount)} | ${percentage(card.ambiguityEscalationRate, card.ambiguityTaskCount)} | ${percentage(card.evidenceCompletenessRate, card.answerTaskCount)} | ${card.averageToolCalls.toFixed(1)} | ${card.averageContextBytes.toFixed(0)} |`,
+        `| ${card.split.value} | ${card.route} | ${card.totalTrials} | ${percentage(card.acceptedRate, card.totalTrials)} | ${percentage(card.permissionSafetyRate, card.permissionTaskCount)} | ${percentage(card.semanticSuccessRate, card.answerTaskCount)} | ${percentage(card.ambiguityEscalationRate, card.ambiguityTaskCount)} | ${percentage(card.freshnessEscalationRate, card.freshnessTaskCount)} | ${percentage(card.evidenceCompletenessRate, card.answerTaskCount)} | ${card.averageToolCalls.toFixed(1)} | ${card.reviewerBurdenMinutes} |`,
     ),
   ];
 }

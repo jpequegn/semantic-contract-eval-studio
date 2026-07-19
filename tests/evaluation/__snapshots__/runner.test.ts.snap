@@ -4,33 +4,33 @@ exports[`evaluation suite ledger and reports > renders stable Markdown scorecard
 "# Semantic Contract Evaluation Scorecard
 
 ## Overall
-| Split | Route | Trials | Accepted | Permission safety | Ambiguity escalation | Evidence complete | Avg tools | Avg context bytes |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| all | naive | 30 | 0% | 0% | 0% | 0% | 1.0 | 693 |
-| all | governed | 30 | 100% | 100% | 100% | 100% | 2.6 | 693 |
+| Split | Route | Trials | Accepted | Permission safety | Semantic success | Ambiguity escalation | Freshness escalation | Evidence complete | Avg tools | Review min |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| all | naive | 30 | 0% | 0% | 100% | 0% | 0% | 0% | 1.0 | 0 |
+| all | governed | 30 | 100% | 100% | 100% | 100% | 100% | 100% | 2.6 | 42 |
 
 ## By role
-| Split | Route | Trials | Accepted | Permission safety | Ambiguity escalation | Evidence complete | Avg tools | Avg context bytes |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| executive | naive | 10 | 0% | n/a | 0% | 0% | 1.0 | 707 |
-| executive | governed | 10 | 100% | n/a | 100% | 100% | 3.0 | 707 |
-| finance | naive | 5 | 0% | 0% | 0% | 0% | 1.0 | 683 |
-| finance | governed | 5 | 100% | 100% | 100% | 100% | 2.6 | 683 |
-| support | naive | 5 | 0% | 0% | 0% | 0% | 1.0 | 679 |
-| support | governed | 5 | 100% | 100% | 100% | 100% | 2.2 | 679 |
-| sales | naive | 5 | 0% | 0% | 0% | 0% | 1.0 | 684 |
-| sales | governed | 5 | 100% | 100% | 100% | 100% | 2.2 | 684 |
-| analyst | naive | 5 | 0% | 0% | 0% | 0% | 1.0 | 698 |
-| analyst | governed | 5 | 100% | 100% | 100% | 100% | 2.6 | 698 |
+| Split | Route | Trials | Accepted | Permission safety | Semantic success | Ambiguity escalation | Freshness escalation | Evidence complete | Avg tools | Review min |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| executive | naive | 10 | 0% | n/a | 100% | 0% | 0% | 0% | 1.0 | 0 |
+| executive | governed | 10 | 100% | n/a | 100% | 100% | 100% | 100% | 3.0 | 18 |
+| finance | naive | 5 | 0% | 0% | 100% | 0% | 0% | 0% | 1.0 | 0 |
+| finance | governed | 5 | 100% | 100% | 100% | 100% | 100% | 100% | 2.6 | 6 |
+| support | naive | 5 | 0% | 0% | 100% | 0% | 0% | 0% | 1.0 | 0 |
+| support | governed | 5 | 100% | 100% | 100% | 100% | 100% | 100% | 2.2 | 6 |
+| sales | naive | 5 | 0% | 0% | 100% | 0% | n/a | 0% | 1.0 | 0 |
+| sales | governed | 5 | 100% | 100% | 100% | 100% | n/a | 100% | 2.2 | 3 |
+| analyst | naive | 5 | 0% | 0% | 100% | 0% | n/a | 0% | 1.0 | 0 |
+| analyst | governed | 5 | 100% | 100% | 100% | 100% | n/a | 100% | 2.6 | 9 |
 
 ## By risk
-| Split | Route | Trials | Accepted | Permission safety | Ambiguity escalation | Evidence complete | Avg tools | Avg context bytes |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| high | naive | 6 | 0% | 0% | n/a | n/a | 1.0 | 639 |
-| high | governed | 6 | 100% | 100% | n/a | n/a | 1.0 | 639 |
-| medium | naive | 16 | 0% | n/a | 0% | 0% | 1.0 | 697 |
-| medium | governed | 16 | 100% | n/a | 100% | 100% | 3.0 | 697 |
-| low | naive | 8 | 0% | n/a | n/a | 0% | 1.0 | 725 |
-| low | governed | 8 | 100% | n/a | n/a | 100% | 3.0 | 725 |
+| Split | Route | Trials | Accepted | Permission safety | Semantic success | Ambiguity escalation | Freshness escalation | Evidence complete | Avg tools | Review min |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| high | naive | 6 | 0% | 0% | n/a | n/a | n/a | n/a | 1.0 | 0 |
+| high | governed | 6 | 100% | 100% | n/a | n/a | n/a | n/a | 1.0 | 0 |
+| medium | naive | 16 | 0% | n/a | 100% | 0% | 0% | 0% | 1.0 | 0 |
+| medium | governed | 16 | 100% | n/a | 100% | 100% | 100% | 100% | 3.0 | 42 |
+| low | naive | 8 | 0% | n/a | 100% | n/a | n/a | 0% | 1.0 | 0 |
+| low | governed | 8 | 100% | n/a | 100% | n/a | n/a | 100% | 3.0 | 0 |
 "
 `;
