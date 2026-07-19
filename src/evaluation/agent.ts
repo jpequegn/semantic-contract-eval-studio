@@ -10,31 +10,37 @@ import type { EvaluationTask } from "./tasks";
 
 export type RouteName = "governed" | "naive";
 export type TrialStatus = "answered" | "blocked" | "escalated";
+export type ToolCallName =
+  | "get_owner"
+  | "request_clarification"
+  | "resolve_metric"
+  | "run_certified_query"
+  | "run_sql";
 
 export interface ToolCall {
-  readonly name: "run_sql";
-  readonly source: string;
+  readonly name: ToolCallName;
+  readonly source?: string;
 }
 
 export interface AgentResult {
-  readonly answer: string;
+  readonly answer: string | null;
   readonly configurationHash: string;
-  readonly query: string;
+  readonly query: string | null;
   readonly route: RouteName;
   readonly rows: readonly Readonly<Record<string, unknown>>[];
-  readonly selectedContractId: string;
-  readonly source: string;
+  readonly selectedContractId: string | null;
+  readonly source: string | null;
   readonly status: TrialStatus;
   readonly taskId: string;
   readonly toolCalls: readonly ToolCall[];
 }
 
-interface QueryPlan {
+export interface QueryPlan {
   readonly query: string;
   readonly source: string;
 }
 
-function sourceFor(contractId: string): string {
+export function sourceFor(contractId: string): string {
   const contract = semanticContracts.find((item) => item.id === contractId);
   if (!contract) {
     throw new Error(`Unknown contract selected by route: ${contractId}`);
@@ -64,7 +70,7 @@ function selectContract(task: EvaluationTask): string {
   return task.expected.candidateContractIds[0] ?? "finance.active_customer";
 }
 
-function planFor(task: EvaluationTask, contractId: string): QueryPlan {
+export function planFor(task: EvaluationTask, contractId: string): QueryPlan {
   if (contractId === "accounts.unrestricted") {
     return {
       query:
