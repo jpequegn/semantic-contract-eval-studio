@@ -12,7 +12,10 @@
     "dev": "concurrently -k \"npm:dev:api\" \"npm:dev:web\"",
     "dev:api": "tsx watch src/server/index.ts",
     "dev:web": "vite --host 127.0.0.1",
+    "evaluate": "tsx src/cli/evaluate.ts",
+    "fixture": "tsx src/cli/fixture.ts",
     "format": "prettier --write .",
+    "impact": "tsx src/cli/impact.ts",
     "lint": "prettier --check .",
     "start": "tsx src/server/index.ts",
     "test": "vitest run",
@@ -29,6 +32,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@playwright/test": "^1.51.0",
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.3",

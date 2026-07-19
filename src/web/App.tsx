@@ -385,7 +385,7 @@ export function App() {
             </div>
             <CircleHelp size={19} aria-hidden="true" />
           </div>
-          <div className="task-list" role="list">
+          <div className="task-list">
             {reviews.map((review) => {
               const governed = trialFor(review, "governed");
               return (
